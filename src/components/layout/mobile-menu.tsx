@@ -5,16 +5,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Users, Search, Activity, Shuffle, Grid3x3, Home, X, Menu } from "lucide-react";
+import { Users, Search, Shuffle, Home, Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
 const navItems = [
   { href: "/", label: "Dashboard", icon: Home },
   { href: "/participants", label: "Participants", icon: Users },
   { href: "/search", label: "Search", icon: Search },
-  { href: "/status", label: "Status", icon: Activity },
   { href: "/roulette", label: "Roulette", icon: Shuffle },
-  { href: "/exchange", label: "Exchange", icon: Grid3x3 },
 ];
 
 export function MobileMenu() {
@@ -26,7 +24,6 @@ export function MobileMenu() {
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon" className="md:hidden">
           <Menu className="h-5 w-5" />
-          <span className="sr-only">Open menu</span>
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="w-[300px] sm:w-[400px]">

@@ -2,13 +2,6 @@
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Search, Filter } from "lucide-react";
 import type { ParticipantFilters } from "@/lib/supabase/filters";
 
@@ -50,28 +43,24 @@ export function ParticipantFilters({
           <Label htmlFor="skill" className="sr-only">
             Filter by skill
           </Label>
-          <Select
+          <select
+            id="skill"
             value={filters.skill || "all"}
-            onValueChange={(value) =>
+            onChange={(e) =>
               onFiltersChange({
                 ...filters,
-                skill: value === "all" ? undefined : value,
+                skill: e.target.value === "all" ? undefined : e.target.value,
               })
             }
+            className="w-full h-11 rounded-lg border-2 border-gray-200 bg-gradient-to-b from-white to-gray-50 px-4 py-2.5 text-sm font-medium text-gray-900 shadow-sm transition-all duration-200 hover:border-gray-300 hover:shadow-md hover:from-white hover:to-white focus:outline-none focus:border-gray-400 focus:ring-2 focus:ring-gray-200 focus:ring-offset-1 focus:shadow-lg"
           >
-            <SelectTrigger id="skill">
-              <Filter className="h-4 w-4 mr-2" />
-              <SelectValue placeholder="All skills" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All skills</SelectItem>
-              {availableSkills.map((skill) => (
-                <SelectItem key={skill} value={skill}>
-                  {skill}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            <option value="all">All skills</option>
+            {availableSkills.map((skill) => (
+              <option key={skill} value={skill}>
+                {skill}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
     </div>

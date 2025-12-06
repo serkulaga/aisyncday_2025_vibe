@@ -5,13 +5,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Lightbulb, Loader2, Copy, Check, AlertCircle } from "lucide-react";
 import { generateIntro } from "./actions";
 import { getAllParticipantsClient } from "@/lib/supabase/participants-client";
@@ -161,26 +154,24 @@ export function IntroGenerator({
         {mode === "participant" && (
           <div className="space-y-2">
             <Label htmlFor="target-participant">Select Participant</Label>
-            <Select
+            <select
+              id="target-participant"
               value={selectedParticipantId}
-              onValueChange={(value) => {
-                setSelectedParticipantId(value);
+              onChange={(e) => {
+                setSelectedParticipantId(e.target.value);
                 setError("");
                 setIntroMessage("");
               }}
               disabled={loadingParticipants || isPending}
+              className="w-full h-11 rounded-lg border-2 border-gray-200 bg-gradient-to-b from-white to-gray-50 px-4 py-2.5 text-sm font-medium text-gray-900 shadow-sm transition-all duration-200 hover:border-gray-300 hover:shadow-md hover:from-white hover:to-white focus:outline-none focus:border-gray-400 focus:ring-2 focus:ring-gray-200 focus:ring-offset-1 focus:shadow-lg disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-gray-200 disabled:hover:shadow-sm"
             >
-              <SelectTrigger id="target-participant">
-                <SelectValue placeholder="Choose a participant..." />
-              </SelectTrigger>
-              <SelectContent>
-                {participants.map((p) => (
-                  <SelectItem key={p.id} value={p.id.toString()}>
-                    {p.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              <option value="">Choose a participant...</option>
+              {participants.map((p) => (
+                <option key={p.id} value={p.id.toString()}>
+                  {p.name}
+                </option>
+              ))}
+            </select>
           </div>
         )}
 

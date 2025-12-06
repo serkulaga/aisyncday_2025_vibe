@@ -5,13 +5,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Shuffle, User, Sparkles, Target, Users, Loader2, AlertCircle } from "lucide-react";
 import { getCurrentParticipantId, setCurrentParticipantId } from "@/lib/utils/storage";
 import { getParticipantByIdClient, getAllParticipantsClient } from "@/lib/supabase/participants-client";
@@ -190,14 +183,21 @@ export function RouletteManager({ participants }: RouletteManagerProps) {
     }
   }, [selectedParticipantId]);
 
-  const handleParticipantChange = (participantId: string) => {
-    const id = parseInt(participantId, 10);
-    if (!isNaN(id)) {
-      setSelectedParticipantId(id);
-      setCurrentParticipantId(id);
-      setMatches([]); // Clear previous matches
-      setPreviousMatchIds([]); // Clear previous match history
-      setHasSpun(false);
+  const handleParticipantChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    if (value) {
+      const id = parseInt(value, 10);
+      if (!isNaN(id)) {
+        setSelectedParticipantId(id);
+        setCurrentParticipantId(id);
+        setMatches([]);
+        setPreviousMatchIds([]);
+        setHasSpun(false);
+      }
+    } else {
+      setSelectedParticipantId(null);
+      setCurrentParticipant(null);
+      setMatches([]);
     }
   };
 
@@ -247,34 +247,32 @@ export function RouletteManager({ participants }: RouletteManagerProps) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Participant Selection */}
-      <Card>
+      <Card className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
         <CardHeader>
-          <CardTitle>Select Participant</CardTitle>
+          <CardTitle className="text-xl font-semibold tracking-tight">Select Participant</CardTitle>
           <CardDescription>
             Choose which participant you are to find matches
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="relative">
           <div className="space-y-2">
             <Label htmlFor="participant-select">Participant</Label>
-            <Select
+            <select
+              id="participant-select"
               value={selectedParticipantId?.toString() || ""}
-              onValueChange={handleParticipantChange}
+              onChange={handleParticipantChange}
               disabled={loading || matching}
+              className="w-full h-11 rounded-lg border-2 border-gray-200 bg-gradient-to-b from-white to-gray-50 px-4 py-2.5 text-sm font-medium text-gray-900 shadow-sm transition-all duration-200 hover:border-gray-300 hover:shadow-md hover:from-white hover:to-white focus:outline-none focus:border-gray-400 focus:ring-2 focus:ring-gray-200 focus:ring-offset-1 focus:shadow-lg disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-gray-200 disabled:hover:shadow-sm"
             >
-              <SelectTrigger id="participant-select">
-                <SelectValue placeholder="Select a participant" />
-              </SelectTrigger>
-              <SelectContent>
-                {participants.map((p) => (
-                  <SelectItem key={p.id} value={p.id.toString()}>
-                    {p.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              <option value="">Select a participant</option>
+              {participants.map((p) => (
+                <option key={p.id} value={p.id.toString()}>
+                  {p.name}
+                </option>
+              ))}
+            </select>
             <p className="text-xs text-muted-foreground">
               Your selection will be saved for future visits
             </p>
@@ -282,19 +280,20 @@ export function RouletteManager({ participants }: RouletteManagerProps) {
         </CardContent>
       </Card>
 
-      {loading ? (
-        <Card>
+      <div className="relative z-0 mt-8">
+        {loading ? (
+        <Card className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
           <CardContent className="py-12 text-center">
-            <Loader2 className="h-8 w-8 mx-auto animate-spin text-muted-foreground" />
-            <p className="text-sm text-muted-foreground mt-4">Loading participant data...</p>
+            <Loader2 className="h-8 w-8 mx-auto animate-spin text-gray-400" />
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-4">Loading participant data...</p>
           </CardContent>
         </Card>
       ) : currentParticipant ? (
         <>
           {/* Spin Button */}
-          <Card>
+          <Card className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
             <CardHeader>
-              <CardTitle>Find Your Match</CardTitle>
+              <CardTitle className="text-xl font-semibold tracking-tight">Find Your Match</CardTitle>
               <CardDescription>
                 Click the button below to discover interesting connections
               </CardDescription>
@@ -377,7 +376,8 @@ export function RouletteManager({ participants }: RouletteManagerProps) {
             </p>
           </CardContent>
         </Card>
-      )}
+        )}
+      </div>
 
       {/* How It Works */}
       <Card className="border-primary/20">

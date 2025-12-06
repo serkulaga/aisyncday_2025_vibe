@@ -51,8 +51,8 @@ export function ParticipantCard({ participant }: ParticipantCardProps) {
   const hasMoreSkills = participant.skills.length > 5;
 
   return (
-    <Link href={`/participants/${participant.id}`} className="block">
-      <Card className="h-full hover:shadow-lg hover:shadow-primary/5 transition-all duration-200 cursor-pointer border-border/50 hover:border-border">
+    <Link href={`/participants/${participant.id}`} className="block group">
+      <Card className="h-full hover:shadow-lg transition-all duration-200 cursor-pointer border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600">
         <CardHeader className="pb-3">
           <div className="flex items-start justify-between gap-3 sm:gap-4">
             <div className="flex items-center gap-3 flex-1 min-w-0">

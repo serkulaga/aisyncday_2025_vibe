@@ -19,13 +19,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
-          <Navbar />
-          <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10 max-w-7xl">
-            {children}
-          </main>
-          <ToasterProvider />
-        </div>
+        <ToasterProvider>
+          <div className="min-h-screen bg-white">
+            <Navbar />
+            <main>
+              <div className="container mx-auto px-4 py-8">
+                {children}
+              </div>
+            </main>
+          </div>
+        </ToasterProvider>
       </body>
     </html>
   );
