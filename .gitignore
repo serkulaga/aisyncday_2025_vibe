@@ -137,3 +137,11 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Real participant data (contains personal information)
+participants.json
+src/data/participants.json
+
+# Backup files
+.backups/
+*.backup
