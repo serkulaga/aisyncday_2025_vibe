@@ -40,3 +40,7 @@ Cursor uses auto mode
 
 ### Phase 10 – Deployment and polish
 - Prompt 18 — Prepare app for production build and Vercel deployment
+
+
+
+A full chat in the docs/cursor_community_os_project_planning_an.md
